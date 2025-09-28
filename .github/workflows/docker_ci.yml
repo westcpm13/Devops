@@ -1,0 +1,25 @@
+name: CI/CD Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Sprawdzenie kodu z repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Budowanie obrazu Dockera
+      - name: Build Docker image
+        run: docker build -t moja-aplikacja .
+
+      # 3. Opcjonalnie: uruchomienie kontenera interaktywnie (np. testy)
+      - name: Run container for testing
+        run: |
+          docker run --rm moja-aplikacja bash -c "echo 'Katalogi w projekcie:' && ls -l /app"
